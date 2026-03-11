@@ -1,0 +1,463 @@
+<mxfile host="app.diagrams.net" modified="2026-03-10T00:00:00.000Z" agent="draw.io" version="22.0.0" type="device">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PAGE 1 · System Overview
+       ═══════════════════════════════════════════════════════════ -->
+  <diagram id="page-overview" name="System Overview">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="t1" value="Voice-Based Interview Agent — System Overview" style="text;html=1;fontSize=22;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="400" y="30" width="900" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- ── Client ── -->
+        <mxCell id="client" value="Client / Frontend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="530" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ── FastAPI App ── -->
+        <mxCell id="fastapi-bg" value="" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666;dashed=1;verticalAlign=top;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="320" y="100" width="860" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="fastapi-label" value="FastAPI Application  (main.py)" style="text;html=1;fontSize=13;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="330" y="108" width="340" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- Middleware -->
+        <mxCell id="mw" value="Middleware&#xa;CORS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="370" y="160" width="160" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Error Handler -->
+        <mxCell id="eh" value="Error Handler&#xa;(AppError hierarchy)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="560" y="160" width="180" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- ── API Layer ── -->
+        <mxCell id="api-bg" value="" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="250" width="800" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="api-label" value="API Layer  /api/v1" style="text;html=1;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="254" width="200" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ep-health"    value="/health"     style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1"><mxGeometry x="360" y="285" width="100" height="40" as="geometry"/></mxCell>
+        <mxCell id="ep-cand"      value="/candidates" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1"><mxGeometry x="470" y="285" width="110" height="40" as="geometry"/></mxCell>
+        <mxCell id="ep-sess"      value="/sessions"   style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1"><mxGeometry x="590" y="285" width="100" height="40" as="geometry"/></mxCell>
+        <mxCell id="ep-int"       value="/interviews" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1"><mxGeometry x="700" y="285" width="110" height="40" as="geometry"/></mxCell>
+        <mxCell id="ep-speech"    value="/speech"     style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1"><mxGeometry x="820" y="285" width="100" height="40" as="geometry"/></mxCell>
+        <mxCell id="ep-reports"   value="/reports"    style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1"><mxGeometry x="930" y="285" width="100" height="40" as="geometry"/></mxCell>
+
+        <!-- ── Service Layer ── -->
+        <mxCell id="svc-bg" value="" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="410" width="800" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="svc-label" value="Service Layer" style="text;html=1;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="414" width="200" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="svc-cand"   value="CandidateService"  style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1"><mxGeometry x="360" y="445" width="130" height="40" as="geometry"/></mxCell>
+        <mxCell id="svc-sess"   value="SessionService"    style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1"><mxGeometry x="500" y="445" width="120" height="40" as="geometry"/></mxCell>
+        <mxCell id="svc-int"    value="InterviewService"  style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1"><mxGeometry x="630" y="445" width="130" height="40" as="geometry"/></mxCell>
+        <mxCell id="svc-q"      value="QuestionService"   style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1"><mxGeometry x="770" y="445" width="120" height="40" as="geometry"/></mxCell>
+        <mxCell id="svc-eval"   value="EvaluatorService"  style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1"><mxGeometry x="900" y="445" width="130" height="40" as="geometry"/></mxCell>
+        <mxCell id="svc-rep"    value="ReportService"     style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1"><mxGeometry x="360" y="495" width="120" height="35" as="geometry"/></mxCell>
+        <mxCell id="svc-stt"    value="STT Service&#xa;(Whisper)"   style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1"><mxGeometry x="490" y="495" width="120" height="35" as="geometry"/></mxCell>
+        <mxCell id="svc-tts"    value="TTS Service&#xa;(ElevenLabs)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1"><mxGeometry x="620" y="495" width="120" height="35" as="geometry"/></mxCell>
+
+        <!-- ── Repository Layer ── -->
+        <mxCell id="repo-bg" value="" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="580" width="800" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="repo-label" value="Repository Layer" style="text;html=1;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="584" width="200" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="repo-cand"  value="CandidateRepo"  style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1"><mxGeometry x="360" y="610" width="120" height="40" as="geometry"/></mxCell>
+        <mxCell id="repo-sess"  value="SessionRepo"    style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1"><mxGeometry x="490" y="610" width="110" height="40" as="geometry"/></mxCell>
+        <mxCell id="repo-rec"   value="RecordRepo"     style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1"><mxGeometry x="610" y="610" width="110" height="40" as="geometry"/></mxCell>
+        <mxCell id="repo-eval"  value="EvaluationRepo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1"><mxGeometry x="730" y="610" width="120" height="40" as="geometry"/></mxCell>
+        <mxCell id="repo-rep"   value="ReportRepo"     style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1"><mxGeometry x="860" y="610" width="110" height="40" as="geometry"/></mxCell>
+
+        <!-- ── Data Layer ── -->
+        <mxCell id="pg" value="PostgreSQL&#xa;(SQLAlchemy async)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="730" width="160" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="redis" value="Redis&#xa;(Session Cache)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="730" width="160" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- ── External Services ── -->
+        <mxCell id="ext-bg" value="" style="rounded=1;fillColor=#ffe6cc;strokeColor=#d79b00;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="250" width="240" height="420" as="geometry"/>
+        </mxCell>
+        <mxCell id="ext-label" value="External AI Services" style="text;html=1;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="258" width="220" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="claude" value="Anthropic Claude&#xa;• Question Generation&#xa;• Answer Evaluation&#xa;• Report Narrative" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1265" y="290" width="200" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="whisper" value="OpenAI Whisper&#xa;• Speech-to-Text&#xa;• Audio transcription" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1265" y="400" width="200" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="elevenlabs" value="ElevenLabs&#xa;• Text-to-Speech&#xa;• Voice synthesis" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1265" y="500" width="200" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Arrows: client → middleware -->
+        <mxCell id="a1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="client" target="mw" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <!-- mw → api -->
+        <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="mw" target="ep-health" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <!-- api → service -->
+        <mxCell id="a3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="ep-int" target="svc-int" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="ep-cand" target="svc-cand" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="ep-sess" target="svc-sess" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="ep-speech" target="svc-stt" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="ep-reports" target="svc-rep" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <!-- service → repo -->
+        <mxCell id="a8" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="svc-int" target="repo-rec" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a9" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="svc-sess" target="repo-sess" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <!-- repo → postgres -->
+        <mxCell id="a10" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="repo-rec" target="pg" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a11" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="repo-sess" target="pg" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <!-- sess svc → redis -->
+        <mxCell id="a12" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="svc-sess" target="redis" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <!-- services → external -->
+        <mxCell id="a13" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;" edge="1" source="svc-q" target="claude" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a14" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;" edge="1" source="svc-eval" target="claude" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a15" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;" edge="1" source="svc-stt" target="whisper" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a16" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;" edge="1" source="svc-tts" target="elevenlabs" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PAGE 2 · Interview Flow (Sequence)
+       ═══════════════════════════════════════════════════════════ -->
+  <diagram id="page-flow" name="Interview Flow">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="ft" value="Interview Flow — End to End" style="text;html=1;fontSize=20;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="300" y="20" width="900" height="36" as="geometry"/>
+        </mxCell>
+
+        <!-- Swimlane headers -->
+        <mxCell id="col-client"   value="Client" style="text;html=1;fontSize=13;fontStyle=1;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="60"   y="70" width="120" height="36" as="geometry"/></mxCell>
+        <mxCell id="col-api"      value="API Layer" style="text;html=1;fontSize=13;fontStyle=1;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="220"  y="70" width="120" height="36" as="geometry"/></mxCell>
+        <mxCell id="col-int"      value="InterviewService" style="text;html=1;fontSize=13;fontStyle=1;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="380"  y="70" width="150" height="36" as="geometry"/></mxCell>
+        <mxCell id="col-sess"     value="SessionService" style="text;html=1;fontSize=13;fontStyle=1;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="560"  y="70" width="140" height="36" as="geometry"/></mxCell>
+        <mxCell id="col-claude"   value="Claude (LLM)" style="text;html=1;fontSize=13;fontStyle=1;align=center;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="730"  y="70" width="130" height="36" as="geometry"/></mxCell>
+        <mxCell id="col-repo"     value="Repositories" style="text;html=1;fontSize=13;fontStyle=1;align=center;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1"><mxGeometry x="890"  y="70" width="140" height="36" as="geometry"/></mxCell>
+        <mxCell id="col-db"       value="PostgreSQL / Redis" style="text;html=1;fontSize=13;fontStyle=1;align=center;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="1060" y="70" width="160" height="36" as="geometry"/></mxCell>
+
+        <!-- Lifelines -->
+        <mxCell id="ll1" style="edgeStyle=none;dashed=1;strokeColor=#666;" edge="1" parent="1"><mxGeometry x="120"  y="106" width="1" height="1020" as="geometry"><Array as="points"><mxPoint x="120"  y="106"/><mxPoint x="120"  y="1120"/></Array></mxGeometry></mxCell>
+        <mxCell id="ll2" style="edgeStyle=none;dashed=1;strokeColor=#666;" edge="1" parent="1"><mxGeometry x="280"  y="106" width="1" height="1020" as="geometry"><Array as="points"><mxPoint x="280"  y="106"/><mxPoint x="280"  y="1120"/></Array></mxGeometry></mxCell>
+        <mxCell id="ll3" style="edgeStyle=none;dashed=1;strokeColor=#666;" edge="1" parent="1"><mxGeometry x="455"  y="106" width="1" height="1020" as="geometry"><Array as="points"><mxPoint x="455"  y="106"/><mxPoint x="455"  y="1120"/></Array></mxGeometry></mxCell>
+        <mxCell id="ll4" style="edgeStyle=none;dashed=1;strokeColor=#666;" edge="1" parent="1"><mxGeometry x="630"  y="106" width="1" height="1020" as="geometry"><Array as="points"><mxPoint x="630"  y="106"/><mxPoint x="630"  y="1120"/></Array></mxGeometry></mxCell>
+        <mxCell id="ll5" style="edgeStyle=none;dashed=1;strokeColor=#d79b00;" edge="1" parent="1"><mxGeometry x="795"  y="106" width="1" height="1020" as="geometry"><Array as="points"><mxPoint x="795"  y="106"/><mxPoint x="795"  y="1120"/></Array></mxGeometry></mxCell>
+        <mxCell id="ll6" style="edgeStyle=none;dashed=1;strokeColor=#9673a6;" edge="1" parent="1"><mxGeometry x="960"  y="106" width="1" height="1020" as="geometry"><Array as="points"><mxPoint x="960"  y="106"/><mxPoint x="960"  y="1120"/></Array></mxGeometry></mxCell>
+        <mxCell id="ll7" style="edgeStyle=none;dashed=1;strokeColor=#b85450;" edge="1" parent="1"><mxGeometry x="1140" y="106" width="1" height="1020" as="geometry"><Array as="points"><mxPoint x="1140" y="106"/><mxPoint x="1140" y="1120"/></Array></mxGeometry></mxCell>
+
+        <!-- Step labels (left margin) -->
+        <mxCell id="s0lbl" value="① Create Session" style="text;html=1;fontSize=11;fontStyle=2;align=right;" vertex="1" parent="1"><mxGeometry x="0" y="140" width="55" height="20" as="geometry"/></mxCell>
+        <mxCell id="s1lbl" value="② Start Interview" style="text;html=1;fontSize=11;fontStyle=2;align=right;" vertex="1" parent="1"><mxGeometry x="0" y="240" width="55" height="20" as="geometry"/></mxCell>
+        <mxCell id="s2lbl" value="③ Gen Q1 (Claude)" style="text;html=1;fontSize=11;fontStyle=2;align=right;" vertex="1" parent="1"><mxGeometry x="0" y="330" width="55" height="20" as="geometry"/></mxCell>
+        <mxCell id="s3lbl" value="④ Submit Answer" style="text;html=1;fontSize=11;fontStyle=2;align=right;" vertex="1" parent="1"><mxGeometry x="0" y="470" width="55" height="20" as="geometry"/></mxCell>
+        <mxCell id="s4lbl" value="⑤ Evaluate (Claude)" style="text;html=1;fontSize=11;fontStyle=2;align=right;" vertex="1" parent="1"><mxGeometry x="0" y="570" width="55" height="20" as="geometry"/></mxCell>
+        <mxCell id="s5lbl" value="⑥ Store Record" style="text;html=1;fontSize=11;fontStyle=2;align=right;" vertex="1" parent="1"><mxGeometry x="0" y="660" width="55" height="20" as="geometry"/></mxCell>
+        <mxCell id="s6lbl" value="⑦ Next Q / End" style="text;html=1;fontSize=11;fontStyle=2;align=right;" vertex="1" parent="1"><mxGeometry x="0" y="750" width="55" height="20" as="geometry"/></mxCell>
+        <mxCell id="s7lbl" value="⑧ Generate Report" style="text;html=1;fontSize=11;fontStyle=2;align=right;" vertex="1" parent="1"><mxGeometry x="0" y="870" width="55" height="20" as="geometry"/></mxCell>
+
+        <!-- ① POST /sessions -->
+        <mxCell id="f1" value="POST /sessions" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="120" y="150"/></Array><Array as="targetPoint"><mxPoint x="280" y="150"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f2" value="create_session()" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="280" y="165"/></Array><Array as="targetPoint"><mxPoint x="630" y="165"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f3" value="write DB + Redis" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="630" y="180"/></Array><Array as="targetPoint"><mxPoint x="1140" y="180"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f4" value="sessionId" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="280" y="195"/></Array><Array as="targetPoint"><mxPoint x="120" y="195"/></Array></mxGeometry>
+        </mxCell>
+
+        <!-- ② POST /interviews (start) -->
+        <mxCell id="f5" value="POST /interviews" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="120" y="250"/></Array><Array as="targetPoint"><mxPoint x="280" y="250"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f6" value="start_interview()" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="280" y="265"/></Array><Array as="targetPoint"><mxPoint x="455" y="265"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f7" value="get_session_state()" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="455" y="280"/></Array><Array as="targetPoint"><mxPoint x="630" y="280"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f7b" value="Redis GET" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="630" y="295"/></Array><Array as="targetPoint"><mxPoint x="1140" y="295"/></Array></mxGeometry>
+        </mxCell>
+
+        <!-- ③ Generate Q1 -->
+        <mxCell id="f8" value="generate_question(skill, difficulty, history)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;strokeColor=#d79b00;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="455" y="340"/></Array><Array as="targetPoint"><mxPoint x="795" y="340"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f9" value="Claude API → JSON question" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;strokeColor=#d79b00;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="795" y="360"/></Array><Array as="targetPoint"><mxPoint x="455" y="360"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f10" value="update Redis state + ConversationLog" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="455" y="380"/></Array><Array as="targetPoint"><mxPoint x="1140" y="380"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f11" value="Q1 text" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="280" y="400"/></Array><Array as="targetPoint"><mxPoint x="120" y="400"/></Array></mxGeometry>
+        </mxCell>
+
+        <!-- ④ Submit answer -->
+        <mxCell id="f12" value="POST /interviews/{id}/answer" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="120" y="480"/></Array><Array as="targetPoint"><mxPoint x="280" y="480"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f13" value="submit_answer(answer)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="280" y="495"/></Array><Array as="targetPoint"><mxPoint x="455" y="495"/></Array></mxGeometry>
+        </mxCell>
+
+        <!-- ⑤ Evaluate -->
+        <mxCell id="f14" value="evaluate_answer(question, answer, skill, difficulty)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;strokeColor=#d79b00;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="455" y="580"/></Array><Array as="targetPoint"><mxPoint x="795" y="580"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f15" value="{ score, feedback, strengths, weaknesses }" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;strokeColor=#d79b00;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="795" y="600"/></Array><Array as="targetPoint"><mxPoint x="455" y="600"/></Array></mxGeometry>
+        </mxCell>
+
+        <!-- ⑥ Store Record + EvaluationResult -->
+        <mxCell id="f16" value="record_repo.create() + eval_repo.create()" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;strokeColor=#9673a6;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="455" y="670"/></Array><Array as="targetPoint"><mxPoint x="960" y="670"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f17" value="INSERT InterviewRecord + EvaluationResult" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;strokeColor=#b85450;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="960" y="690"/></Array><Array as="targetPoint"><mxPoint x="1140" y="690"/></Array></mxGeometry>
+        </mxCell>
+
+        <!-- ⑦ Next question or end -->
+        <mxCell id="f18" value="questions_asked &lt; MAX?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="400" y="730" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="f18y" value="YES → generate_question()" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;strokeColor=#d79b00;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="580" y="760"/></Array><Array as="targetPoint"><mxPoint x="795" y="760"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f18n" value="NO → end_session()" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="490" y="790"/></Array><Array as="targetPoint"><mxPoint x="630" y="790"/></Array></mxGeometry>
+        </mxCell>
+
+        <!-- ⑧ Report -->
+        <mxCell id="f19" value="_finalize_interview() → ReportService.generate_report()" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;strokeColor=#d79b00;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="455" y="880"/></Array><Array as="targetPoint"><mxPoint x="795" y="880"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f20" value="Claude narrative → InterviewReport stored" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;strokeColor=#b85450;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="795" y="900"/></Array><Array as="targetPoint"><mxPoint x="1140" y="900"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f21" value="AnswerResponse + next question" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="sourcePoint"><mxPoint x="280" y="950"/></Array><Array as="targetPoint"><mxPoint x="120" y="950"/></Array></mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PAGE 3 · Data Model (ERD)
+       ═══════════════════════════════════════════════════════════ -->
+  <diagram id="page-erd" name="Data Model (ERD)">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="etitle" value="Data Model — Entity Relationship" style="text;html=1;fontSize=20;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="700" height="36" as="geometry"/>
+        </mxCell>
+
+        <!-- Candidate -->
+        <mxCell id="ent-cand" value="&lt;b&gt;Candidate&lt;/b&gt;&#xa;──────────────────&#xa;PK  id : UUID&#xa;    name : String&#xa;    email : String (unique)&#xa;    experience_level : String&#xa;    skill_scores : JSON&#xa;    created_at : DateTime&#xa;    updated_at : DateTime" style="shape=table;startSize=30;container=0;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="80" y="100" width="260" height="200" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewSession -->
+        <mxCell id="ent-sess" value="&lt;b&gt;InterviewSession&lt;/b&gt;&#xa;──────────────────&#xa;PK  id : UUID&#xa;FK  candidate_id : UUID&#xa;    started_at : DateTime&#xa;    ended_at : DateTime?&#xa;    total_score : Float?&#xa;    status : Enum&#xa;    created_at : DateTime" style="shape=table;startSize=30;container=0;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="440" y="80" width="260" height="220" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewRecord -->
+        <mxCell id="ent-rec" value="&lt;b&gt;InterviewRecord&lt;/b&gt;&#xa;──────────────────&#xa;PK  id : UUID&#xa;FK  session_id : UUID&#xa;    question_id : String&#xa;    question_text : String&#xa;    question_skill : String&#xa;    question_difficulty : String&#xa;    candidate_answer : String&#xa;    timestamp : DateTime" style="shape=table;startSize=30;container=0;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="800" y="80" width="260" height="240" as="geometry"/>
+        </mxCell>
+
+        <!-- EvaluationResult -->
+        <mxCell id="ent-eval" value="&lt;b&gt;EvaluationResult&lt;/b&gt;&#xa;──────────────────&#xa;PK  id : UUID&#xa;FK  record_id : UUID (unique)&#xa;    score : Float (0–10)&#xa;    feedback : String&#xa;    strengths : String[]&#xa;    weaknesses : String[]&#xa;    created_at : DateTime" style="shape=table;startSize=30;container=0;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="80" width="260" height="220" as="geometry"/>
+        </mxCell>
+
+        <!-- ConversationLog -->
+        <mxCell id="ent-log" value="&lt;b&gt;ConversationLog&lt;/b&gt;&#xa;──────────────────&#xa;PK  id : UUID&#xa;FK  session_id : UUID&#xa;    role : String (agent|candidate)&#xa;    content : String&#xa;    timestamp : DateTime" style="shape=table;startSize=30;container=0;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="440" y="420" width="260" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewReport -->
+        <mxCell id="ent-rep" value="&lt;b&gt;InterviewReport&lt;/b&gt;&#xa;──────────────────&#xa;PK  id : UUID&#xa;FK  session_id : UUID (unique)&#xa;FK  candidate_id : UUID&#xa;    total_score : Float&#xa;    strengths : String[]&#xa;    weaknesses : String[]&#xa;    summary : String&#xa;    export_url : String?&#xa;    created_at : DateTime" style="shape=table;startSize=30;container=0;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="800" y="420" width="260" height="260" as="geometry"/>
+        </mxCell>
+
+        <!-- Redis (not a DB table, but part of data model) -->
+        <mxCell id="ent-redis" value="&lt;b&gt;SessionState (Redis)&lt;/b&gt;&#xa;──────────────────&#xa;KEY  session:{id}&#xa;TTL  configurable (default 2h)&#xa;──────────────────&#xa;    session_id : str&#xa;    candidate_id : str&#xa;    status : str&#xa;    questions_asked : int&#xa;    conversation_history : list&#xa;    current_question : dict?&#xa;    started_at : str" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="420" width="260" height="220" as="geometry"/>
+        </mxCell>
+
+        <!-- Status Enum -->
+        <mxCell id="ent-status" value="&lt;b&gt;SessionStatus (Enum)&lt;/b&gt;&#xa;──────────────────&#xa;INITIALIZED&#xa;IN_PROGRESS&#xa;COMPLETED&#xa;ABORTED" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="80" y="700" width="200" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Relationships -->
+        <!-- Candidate 1 → * InterviewSession -->
+        <mxCell id="rel1" value="1" style="edgeStyle=orthogonalEdgeStyle;endArrow=ERmany;startArrow=ERone;fontSize=12;fontStyle=1;" edge="1" source="ent-cand" target="ent-sess" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewSession 1 → * InterviewRecord -->
+        <mxCell id="rel2" value="1" style="edgeStyle=orthogonalEdgeStyle;endArrow=ERmany;startArrow=ERone;fontSize=12;fontStyle=1;" edge="1" source="ent-sess" target="ent-rec" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewRecord 1 → 1 EvaluationResult -->
+        <mxCell id="rel3" value="1" style="edgeStyle=orthogonalEdgeStyle;endArrow=ERone;startArrow=ERone;fontSize=12;fontStyle=1;" edge="1" source="ent-rec" target="ent-eval" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewSession 1 → * ConversationLog -->
+        <mxCell id="rel4" value="1" style="edgeStyle=orthogonalEdgeStyle;endArrow=ERmany;startArrow=ERone;fontSize=12;fontStyle=1;" edge="1" source="ent-sess" target="ent-log" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewSession 1 → 1 InterviewReport -->
+        <mxCell id="rel5" value="1" style="edgeStyle=orthogonalEdgeStyle;endArrow=ERone;startArrow=ERone;fontSize=12;fontStyle=1;" edge="1" source="ent-sess" target="ent-rep" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Candidate 1 → * InterviewReport -->
+        <mxCell id="rel6" value="1" style="edgeStyle=orthogonalEdgeStyle;endArrow=ERmany;startArrow=ERone;fontSize=12;fontStyle=1;dashed=1;" edge="1" source="ent-cand" target="ent-rep" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PAGE 4 · Folder / Module Structure
+       ═══════════════════════════════════════════════════════════ -->
+  <diagram id="page-modules" name="Module Structure">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="mt" value="Module / Folder Structure" style="text;html=1;fontSize=20;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="700" height="36" as="geometry"/>
+        </mxCell>
+
+        <!-- Root -->
+        <mxCell id="root-box" value="Voice-agent/" style="rounded=1;fillColor=#f5f5f5;strokeColor=#333;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="660" y="80" width="200" height="44" as="geometry"/>
+        </mxCell>
+
+        <!-- main.py -->
+        <mxCell id="mainpy" value="main.py&#xa;(entry point + lifespan)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="920" y="80" width="180" height="44" as="geometry"/>
+        </mxCell>
+        <!-- .env.example -->
+        <mxCell id="envex" value=".env.example&#xa;docker-compose.yml" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="920" y="140" width="180" height="44" as="geometry"/>
+        </mxCell>
+        <!-- alembic -->
+        <mxCell id="alembic-box" value="alembic/&#xa;(migrations)" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="80" width="140" height="44" as="geometry"/>
+        </mxCell>
+
+        <!-- src/ -->
+        <mxCell id="src-box" value="src/" style="rounded=1;fillColor=#f5f5f5;strokeColor=#333;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="660" y="180" width="200" height="44" as="geometry"/>
+        </mxCell>
+
+        <!-- config/ -->
+        <mxCell id="cfg" value="config/&#xa;settings.py  database.py  redis.py" style="rounded=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="100" y="290" width="220" height="50" as="geometry"/>
+        </mxCell>
+        <!-- models/ -->
+        <mxCell id="mdl" value="models/  (SQLAlchemy ORM)&#xa;candidate · session · record&#xa;evaluation · report · log" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="340" y="290" width="220" height="50" as="geometry"/>
+        </mxCell>
+        <!-- schemas/ -->
+        <mxCell id="sch" value="schemas/  (Pydantic v2)&#xa;candidate · session · interview&#xa;speech · report" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="580" y="290" width="220" height="50" as="geometry"/>
+        </mxCell>
+        <!-- repositories/ -->
+        <mxCell id="rep-box" value="repositories/&#xa;base · candidate · session&#xa;record · evaluation · report" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="820" y="290" width="220" height="50" as="geometry"/>
+        </mxCell>
+        <!-- services/ -->
+        <mxCell id="svc-box" value="services/&#xa;candidate · session · question&#xa;evaluator · interview · report&#xa;speech/stt.py  speech/tts.py" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="290" width="220" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- api/ -->
+        <mxCell id="api-box" value="api/v1/endpoints/&#xa;health · candidates · sessions&#xa;interviews · speech · reports&#xa;+ deps.py (DbSession, RedisClient)" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="290" width="230" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- middleware/ -->
+        <mxCell id="mw-box" value="middleware/&#xa;error_handler.py" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="100" y="410" width="200" height="44" as="geometry"/>
+        </mxCell>
+        <!-- utils/ -->
+        <mxCell id="ut-box" value="utils/&#xa;logger.py  errors.py  response.py" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="320" y="410" width="240" height="44" as="geometry"/>
+        </mxCell>
+
+        <!-- Arrows from root → src -->
+        <mxCell id="ma1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="root-box" target="src-box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ma2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="root-box" target="mainpy" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ma3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="root-box" target="alembic-box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Arrows from src → modules -->
+        <mxCell id="ma4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="src-box" target="cfg" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ma5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="src-box" target="mdl" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ma6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="src-box" target="sch" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ma7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="src-box" target="rep-box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ma8" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="src-box" target="svc-box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ma9" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="src-box" target="api-box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ma10" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="src-box" target="mw-box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ma11" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="src-box" target="ut-box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Dependency arrows -->
+        <mxCell id="dep1" value="uses" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#82b366;fontSize=10;" edge="1" source="api-box" target="svc-box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="dep2" value="uses" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#9673a6;fontSize=10;" edge="1" source="svc-box" target="rep-box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="dep3" value="uses" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;fontSize=10;" edge="1" source="rep-box" target="mdl" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="dep4" value="config" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#d79b00;fontSize=10;" edge="1" source="svc-box" target="cfg" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Legend -->
+        <mxCell id="leg" value="Layer Colours&#xa;────────────&#xa;Blue = API / HTTP&#xa;Green = Services&#xa;Purple = Repositories&#xa;Red = ORM Models&#xa;Yellow = Config / Schemas / Utils&#xa;Orange = External" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="100" y="520" width="240" height="150" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+</mxfile>

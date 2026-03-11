@@ -1,0 +1,1100 @@
+<mxfile host="app.diagrams.net" modified="2026-03-10T00:00:00.000Z" agent="draw.io" version="22.0.0" type="device">
+
+  <!-- PAGE 1: High-Level Architecture -->
+  <diagram id="high-level" name="High-Level Architecture">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title1" value="Voice-Based Interview Agent — High-Level Architecture" style="text;html=1;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="300" y="20" width="600" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Candidate -->
+        <mxCell id="candidate" value="Candidate" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="300" width="40" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Voice Interface -->
+        <mxCell id="voice_iface" value="Voice Interface&#xa;(WebRTC / Microphone / Speaker)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="280" width="180" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Speech Processing Layer -->
+        <mxCell id="stt" value="Speech-to-Text&#xa;(Whisper)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="200" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="tts" value="Text-to-Speech&#xa;(ElevenLabs / Coqui)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="380" width="160" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Conversation Session Manager -->
+        <mxCell id="session_mgr" value="Conversation&#xa;Session Manager" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="270" width="180" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Interview Agent -->
+        <mxCell id="interview_agent" value="Interview Agent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="270" width="180" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Question Generator -->
+        <mxCell id="question_gen" value="Question&#xa;Generator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="120" width="140" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Answer Evaluator -->
+        <mxCell id="answer_eval" value="Answer&#xa;Evaluator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="440" width="140" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Interview Record Manager -->
+        <mxCell id="record_mgr" value="Interview Record&#xa;Manager" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="270" width="160" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Report Generator -->
+        <mxCell id="report_gen" value="Report&#xa;Generator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="440" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Database -->
+        <mxCell id="db" value="Database&#xa;(PostgreSQL + Redis)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="260" width="120" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Interview Report -->
+        <mxCell id="report_out" value="Interview&#xa;Report" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=0.27;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="430" width="120" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- AI Model -->
+        <mxCell id="ai_model" value="AI / LLM&#xa;Model" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="830" y="100" width="130" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- EDGES — all label cells are siblings at root level, NOT nested inside edge cells -->
+        <mxCell id="e1" edge="1" source="candidate" target="voice_iface" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1_label" value="speaks / hears" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="e1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e2" edge="1" source="voice_iface" target="stt" parent="1" style="exitX=1;exitY=0.25;entryX=0;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2_label" value="audio in" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="e2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e3" edge="1" source="tts" target="voice_iface" parent="1" style="exitX=0;exitY=0.5;entryX=1;entryY=0.75;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3_label" value="audio out" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="e3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e4" edge="1" source="stt" target="session_mgr" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4_label" value="text" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="e4">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e5" edge="1" source="session_mgr" target="tts" parent="1" style="exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="790" y="405"/>
+              <mxPoint x="530" y="405"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5_label" value="response text" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="e5">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="session_mgr" target="interview_agent" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6_label" value="delegates" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="e6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e7" edge="1" source="interview_agent" target="question_gen" parent="1" style="exitX=0.5;exitY=0;entryX=0;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7_label" value="generate Q" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="e7">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e8" edge="1" source="interview_agent" target="answer_eval" parent="1" style="exitX=0.5;exitY=1;entryX=0;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8_label" value="evaluate A" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="e8">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e9" edge="1" source="interview_agent" target="record_mgr" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9_label" value="store record" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="e9">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e10" edge="1" source="record_mgr" target="db" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10_label" value="persist" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="e10">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e11" edge="1" source="record_mgr" target="report_gen" parent="1" style="exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11_label" value="on complete" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="e11">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e12" edge="1" source="report_gen" target="report_out" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12_label" value="generates" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="e12">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e13" edge="1" source="ai_model" target="question_gen" parent="1" style="dashed=1;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13_label" value="powers" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="e13">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e14" edge="1" source="ai_model" target="answer_eval" parent="1" style="dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="895" y="465"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14_label" value="powers" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="e14">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e15" edge="1" source="ai_model" target="report_gen" parent="1" style="dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="895" y="160"/>
+              <mxPoint x="1380" y="160"/>
+              <mxPoint x="1380" y="470"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15_label" value="powers" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="e15">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="530" width="400" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend_title" value="Legend" style="text;html=1;fontSize=12;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="210" y="535" width="80" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg1" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220" y="575" as="sourcePoint"/>
+            <mxPoint x="290" y="575" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg1_label" value="Data / Control Flow" style="text;html=1;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="300" y="565" width="130" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg2" value="" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220" y="600" as="sourcePoint"/>
+            <mxPoint x="290" y="600" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg2_label" value="AI / LLM dependency" style="text;html=1;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="300" y="590" width="150" height="20" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 2: Class Diagram -->
+  <diagram id="class-diagram" name="Class Diagram">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="cd_title" value="Voice-Based Interview Agent — Class Diagram" style="text;html=1;fontSize=22;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="450" y="20" width="600" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- ConversationSession -->
+        <mxCell id="cls_convsess" value="&lt;b&gt;ConversationSession&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;startSize=26;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="80" y="100" width="240" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_convsess_attrs" value="- sessionId: string&#xa;- startTime: DateTime&#xa;- conversationHistory: Message[]&#xa;- activeInterview: InterviewSession" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_convsess">
+          <mxGeometry y="26" width="240" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_convsess_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_convsess">
+          <mxGeometry y="106" width="240" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_convsess_ops" value="+ addMessage(msg: Message): void&#xa;+ endSession(): void&#xa;+ getHistory(): Message[]" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_convsess">
+          <mxGeometry y="114" width="240" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewSession -->
+        <mxCell id="cls_intsess" value="&lt;b&gt;InterviewSession&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;startSize=26;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="260" height="240" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_intsess_attrs" value="- interviewId: string&#xa;- candidate: CandidateProfile&#xa;- questionsAsked: InterviewQuestion[]&#xa;- records: InterviewRecord[]&#xa;- totalScore: number&#xa;- status: InterviewStatus" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_intsess">
+          <mxGeometry y="26" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_intsess_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_intsess">
+          <mxGeometry y="126" width="260" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_intsess_ops" value="+ startInterview(): void&#xa;+ addRecord(r: InterviewRecord): void&#xa;+ endInterview(): InterviewReport&#xa;+ getRecords(): InterviewRecord[]&#xa;+ calculateScore(): number" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_intsess">
+          <mxGeometry y="134" width="260" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- CandidateProfile -->
+        <mxCell id="cls_candidate" value="&lt;b&gt;CandidateProfile&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;startSize=26;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="80" y="740" width="240" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_candidate_attrs" value="- candidateId: string&#xa;- name: string&#xa;- email: string&#xa;- experienceLevel: string&#xa;- skillScores: Map&lt;string, number&gt;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_candidate">
+          <mxGeometry y="26" width="240" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_candidate_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_candidate">
+          <mxGeometry y="116" width="240" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_candidate_ops" value="+ getProfile(): object&#xa;+ updateSkillScore(skill, score): void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_candidate">
+          <mxGeometry y="124" width="240" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewAgent -->
+        <mxCell id="cls_agent" value="&lt;b&gt;InterviewAgent&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;startSize=26;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="520" y="100" width="280" height="220" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_agent_attrs" value="- agentId: string&#xa;- role: string&#xa;- questionGenerator: QuestionGenerator&#xa;- answerEvaluator: AnswerEvaluator" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_agent">
+          <mxGeometry y="26" width="280" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_agent_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_agent">
+          <mxGeometry y="106" width="280" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_agent_ops" value="+ generateQuestion(skill, diff): InterviewQuestion&#xa;+ evaluateAnswer(q, answer): EvaluationResult&#xa;+ decideNextStep(session): Action&#xa;+ endInterview(session): void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_agent">
+          <mxGeometry y="114" width="280" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- QuestionGenerator -->
+        <mxCell id="cls_qgen" value="&lt;b&gt;QuestionGenerator&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;startSize=26;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="520" y="420" width="280" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_qgen_attrs" value="- difficultyLevels: string[]&#xa;  [Beginner, Intermediate, Advanced]" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_qgen">
+          <mxGeometry y="26" width="280" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_qgen_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_qgen">
+          <mxGeometry y="76" width="280" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_qgen_ops" value="+ createQuestion(skill, difficulty): InterviewQuestion&#xa;+ getAvailableSkills(): string[]&#xa;+ adjustDifficulty(performance): string" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_qgen">
+          <mxGeometry y="84" width="280" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewQuestion -->
+        <mxCell id="cls_question" value="&lt;b&gt;InterviewQuestion&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;startSize=26;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="520" y="700" width="240" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_question_attrs" value="- questionId: string&#xa;- skill: string&#xa;- difficulty: string&#xa;- text: string" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_question">
+          <mxGeometry y="26" width="240" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_question_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_question">
+          <mxGeometry y="96" width="240" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_question_ops" value="+ getText(): string&#xa;+ getDifficulty(): string" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_question">
+          <mxGeometry y="104" width="240" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- AnswerEvaluator -->
+        <mxCell id="cls_evaluator" value="&lt;b&gt;AnswerEvaluator&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;startSize=26;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="920" y="420" width="300" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_evaluator_attrs" value="- scoringRubric: ScoringRubric&#xa;  (correctness, completeness, clarity, depth)" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_evaluator">
+          <mxGeometry y="26" width="300" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_evaluator_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_evaluator">
+          <mxGeometry y="76" width="300" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_evaluator_ops" value="+ evaluate(question, answer): EvaluationResult&#xa;+ getScore(result): number&#xa;+ getFeedback(result): string" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_evaluator">
+          <mxGeometry y="84" width="300" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- EvaluationResult -->
+        <mxCell id="cls_evalresult" value="&lt;b&gt;EvaluationResult&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;startSize=26;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="920" y="700" width="240" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_evalresult_attrs" value="- score: number&#xa;- feedback: string&#xa;- strengths: string[]&#xa;- weaknesses: string[]" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_evalresult">
+          <mxGeometry y="26" width="240" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_evalresult_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_evalresult">
+          <mxGeometry y="96" width="240" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_evalresult_ops" value="+ getScore(): number&#xa;+ getSummary(): string" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_evalresult">
+          <mxGeometry y="104" width="240" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewRecord -->
+        <mxCell id="cls_record" value="&lt;b&gt;InterviewRecord&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;startSize=26;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="100" width="260" height="190" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_record_attrs" value="- question: InterviewQuestion&#xa;- candidateAnswer: string&#xa;- evaluationResult: EvaluationResult&#xa;- timestamp: DateTime" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_record">
+          <mxGeometry y="26" width="260" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_record_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_record">
+          <mxGeometry y="106" width="260" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_record_ops" value="+ getQuestion(): InterviewQuestion&#xa;+ getAnswer(): string&#xa;+ getEvaluation(): EvaluationResult" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_record">
+          <mxGeometry y="114" width="260" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ReportGenerator -->
+        <mxCell id="cls_reportgen" value="&lt;b&gt;ReportGenerator&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;startSize=26;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="400" width="280" height="190" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_reportgen_attrs" value="(stateless service)" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;fontStyle=2;" vertex="1" parent="cls_reportgen">
+          <mxGeometry y="26" width="280" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_reportgen_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_reportgen">
+          <mxGeometry y="56" width="280" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_reportgen_ops" value="+ generateReport(session): InterviewReport&#xa;+ compileResults(records): Summary&#xa;+ calculateFinalScore(records): number&#xa;+ summarizePerformance(session): string&#xa;+ exportReport(report, format): File" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_reportgen">
+          <mxGeometry y="64" width="280" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewReport -->
+        <mxCell id="cls_report" value="&lt;b&gt;InterviewReport&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;startSize=26;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="700" width="260" height="210" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_report_attrs" value="- reportId: string&#xa;- candidate: CandidateProfile&#xa;- questionsAndAnswers: InterviewRecord[]&#xa;- totalScore: number&#xa;- strengths: string[]&#xa;- weaknesses: string[]" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_report">
+          <mxGeometry y="26" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_report_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_report">
+          <mxGeometry y="126" width="260" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls_report_ops" value="+ getSummary(): string&#xa;+ export(format): File" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=0;fontSize=12;" vertex="1" parent="cls_report">
+          <mxGeometry y="134" width="260" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ASSOCIATIONS — all label cells are flat siblings at root level -->
+
+        <!-- ConversationSession 1--1 InterviewSession -->
+        <mxCell id="assoc1" style="endArrow=diamondThin;endFill=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="cls_convsess" target="cls_intsess" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="assoc1_src" value="1" style="edgeLabel;html=1;fontSize=11;align=right;" vertex="1" connectable="0" parent="assoc1">
+          <mxGeometry x="-0.8" relative="1" as="geometry">
+            <mxPoint x="-10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc1_tgt" value="1" style="edgeLabel;html=1;fontSize=11;align=right;" vertex="1" connectable="0" parent="assoc1">
+          <mxGeometry x="0.8" relative="1" as="geometry">
+            <mxPoint x="-10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc1_label" value="manages" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="assoc1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- InterviewSession 1--1 CandidateProfile -->
+        <mxCell id="assoc2" style="endArrow=open;endFill=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="cls_intsess" target="cls_candidate" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="assoc2_src" value="1" style="edgeLabel;html=1;fontSize=11;align=right;" vertex="1" connectable="0" parent="assoc2">
+          <mxGeometry x="-0.8" relative="1" as="geometry">
+            <mxPoint x="-10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc2_tgt" value="1" style="edgeLabel;html=1;fontSize=11;align=right;" vertex="1" connectable="0" parent="assoc2">
+          <mxGeometry x="0.8" relative="1" as="geometry">
+            <mxPoint x="-10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc2_label" value="for candidate" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="assoc2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- InterviewAgent --uses--> QuestionGenerator -->
+        <mxCell id="assoc3" style="endArrow=open;endFill=0;dashed=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="cls_agent" target="cls_qgen" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="assoc3_label" value="&amp;laquo;uses&amp;raquo;" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="assoc3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewAgent --uses--> AnswerEvaluator -->
+        <mxCell id="assoc4" style="endArrow=open;endFill=0;dashed=1;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=0;" edge="1" source="cls_agent" target="cls_evaluator" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1070" y="210"/>
+              <mxPoint x="1070" y="420"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc4_label" value="&amp;laquo;uses&amp;raquo;" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="assoc4">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- QuestionGenerator creates InterviewQuestion -->
+        <mxCell id="assoc5" style="endArrow=open;endFill=0;dashed=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="cls_qgen" target="cls_question" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="assoc5_label" value="&amp;laquo;creates&amp;raquo;" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="assoc5">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- AnswerEvaluator produces EvaluationResult -->
+        <mxCell id="assoc6" style="endArrow=open;endFill=0;dashed=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="cls_evaluator" target="cls_evalresult" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="assoc6_label" value="&amp;laquo;produces&amp;raquo;" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="assoc6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewSession 1--* InterviewRecord -->
+        <mxCell id="assoc7" style="endArrow=diamondThin;endFill=1;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" source="cls_record" target="cls_intsess" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="195"/>
+              <mxPoint x="400" y="520"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc7_src" value="1..*" style="edgeLabel;html=1;fontSize=11;align=right;" vertex="1" connectable="0" parent="assoc7">
+          <mxGeometry x="-0.85" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc7_tgt" value="1" style="edgeLabel;html=1;fontSize=11;align=right;" vertex="1" connectable="0" parent="assoc7">
+          <mxGeometry x="0.85" relative="1" as="geometry">
+            <mxPoint x="-10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc7_label" value="contains" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="assoc7">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- InterviewRecord has InterviewQuestion -->
+        <mxCell id="assoc8" style="endArrow=open;endFill=0;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.5;" edge="1" source="cls_record" target="cls_question" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1430" y="780"/>
+              <mxPoint x="760" y="780"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc8_src" value="1" style="edgeLabel;html=1;fontSize=11;" vertex="1" connectable="0" parent="assoc8">
+          <mxGeometry x="-0.85" relative="1" as="geometry">
+            <mxPoint x="-10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc8_tgt" value="1" style="edgeLabel;html=1;fontSize=11;" vertex="1" connectable="0" parent="assoc8">
+          <mxGeometry x="0.85" relative="1" as="geometry">
+            <mxPoint x="-10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- InterviewRecord has EvaluationResult -->
+        <mxCell id="assoc9" style="endArrow=open;endFill=0;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0;" edge="1" source="cls_record" target="cls_evalresult" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1430" y="400"/>
+              <mxPoint x="1200" y="400"/>
+              <mxPoint x="1200" y="700"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc9_src" value="1" style="edgeLabel;html=1;fontSize=11;" vertex="1" connectable="0" parent="assoc9">
+          <mxGeometry x="-0.85" relative="1" as="geometry">
+            <mxPoint x="-10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc9_tgt" value="1" style="edgeLabel;html=1;fontSize=11;" vertex="1" connectable="0" parent="assoc9">
+          <mxGeometry x="0.85" relative="1" as="geometry">
+            <mxPoint x="-10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ReportGenerator reads InterviewSession -->
+        <mxCell id="assoc10" style="endArrow=open;endFill=0;dashed=1;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" source="cls_reportgen" target="cls_intsess" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="460" y="495"/>
+              <mxPoint x="460" y="520"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc10_label" value="&amp;laquo;reads&amp;raquo;" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="assoc10">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ReportGenerator creates InterviewReport -->
+        <mxCell id="assoc11" style="endArrow=open;endFill=0;dashed=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="cls_reportgen" target="cls_report" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="assoc11_label" value="&amp;laquo;creates&amp;raquo;" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="assoc11">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 3: Sequence Diagram - Interview Interaction -->
+  <diagram id="seq-interview" name="Sequence — Interview Interaction">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="seq_title" value="Sequence Diagram — Interview Interaction Loop" style="text;html=1;fontSize=20;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="300" y="10" width="600" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Lifeline headers -->
+        <mxCell id="lh_cand" value="Candidate" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;participant=umlActor;size=40;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="70" width="40" height="1050" as="geometry"/>
+        </mxCell>
+        <mxCell id="lh_voice" value=":VoiceInterface" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="70" width="140" height="1050" as="geometry"/>
+        </mxCell>
+        <mxCell id="lh_stt" value=":STT Engine" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="70" width="120" height="1050" as="geometry"/>
+        </mxCell>
+        <mxCell id="lh_session" value=":ConversationSession" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="70" width="160" height="1050" as="geometry"/>
+        </mxCell>
+        <mxCell id="lh_agent" value=":InterviewAgent" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="70" width="140" height="1050" as="geometry"/>
+        </mxCell>
+        <mxCell id="lh_eval" value=":AnswerEvaluator" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="70" width="140" height="1050" as="geometry"/>
+        </mxCell>
+        <mxCell id="lh_isess" value=":InterviewSession" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="70" width="140" height="1050" as="geometry"/>
+        </mxCell>
+        <mxCell id="lh_qgen" value=":QuestionGenerator" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1330" y="70" width="150" height="1050" as="geometry"/>
+        </mxCell>
+        <mxCell id="lh_tts" value=":TTS Engine" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="70" width="120" height="1050" as="geometry"/>
+        </mxCell>
+
+        <!-- Loop frame -->
+        <mxCell id="loop_frame" value="loop [for each question]" style="shape=umlFrame;whiteSpace=wrap;html=1;width=180;height=20;fillColor=none;strokeColor=#666666;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="160" width="1620" height="780" as="geometry"/>
+        </mxCell>
+
+        <!-- Messages -->
+        <mxCell id="msg1" value="1. speaks answer (audio)" style="html=1;verticalAlign=bottom;endArrow=block;exitX=1;exitY=0;entryX=0;entryY=0;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="210" as="sourcePoint"/>
+            <mxPoint x="270" y="210" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg2" value="2. transcribe(audio)" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="270" as="sourcePoint"/>
+            <mxPoint x="450" y="270" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg3" value="3. return transcribedText" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="450" y="320" as="sourcePoint"/>
+            <mxPoint x="270" y="320" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg4" value="4. processInput(text)" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="370" as="sourcePoint"/>
+            <mxPoint x="640" y="370" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg5" value="5. evaluateAnswer(question, answer)" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="420" as="sourcePoint"/>
+            <mxPoint x="840" y="420" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg6" value="6. evaluate(question, answer)" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="470" as="sourcePoint"/>
+            <mxPoint x="1030" y="470" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg7" value="7. return EvaluationResult" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1030" y="520" as="sourcePoint"/>
+            <mxPoint x="840" y="520" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg8" value="8. addRecord(question, answer, evalResult)" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="570" as="sourcePoint"/>
+            <mxPoint x="1210" y="570" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg9" value="9. decideNextStep()" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="630" as="sourcePoint"/>
+            <mxPoint x="870" y="660" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg10" value="10. createQuestion(skill, difficulty)" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="700" as="sourcePoint"/>
+            <mxPoint x="1405" y="700" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg11" value="11. return InterviewQuestion" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1405" y="750" as="sourcePoint"/>
+            <mxPoint x="840" y="750" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg12" value="12. return questionText" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="800" as="sourcePoint"/>
+            <mxPoint x="640" y="800" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg13" value="13. sendResponse(text)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="840" as="sourcePoint"/>
+            <mxPoint x="270" y="840" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg14" value="14. synthesize(text)" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="880" as="sourcePoint"/>
+            <mxPoint x="1580" y="880" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg15" value="15. return audio" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1580" y="910" as="sourcePoint"/>
+            <mxPoint x="270" y="910" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg16" value="16. plays question (audio)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="950" as="sourcePoint"/>
+            <mxPoint x="100" y="950" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 4: Sequence Diagram - Report Generation -->
+  <diagram id="seq-report" name="Sequence — Report Generation">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="rpt_title" value="Sequence Diagram — Report Generation" style="text;html=1;fontSize=20;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="250" y="10" width="500" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Lifelines -->
+        <mxCell id="rl_agent" value=":InterviewAgent" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="70" width="140" height="650" as="geometry"/>
+        </mxCell>
+        <mxCell id="rl_isess" value=":InterviewSession" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="70" width="150" height="650" as="geometry"/>
+        </mxCell>
+        <mxCell id="rl_rptgen" value=":ReportGenerator" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="70" width="150" height="650" as="geometry"/>
+        </mxCell>
+        <mxCell id="rl_db" value=":Database" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="70" width="120" height="650" as="geometry"/>
+        </mxCell>
+        <mxCell id="rl_report" value=":InterviewReport" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="990" y="70" width="140" height="650" as="geometry"/>
+        </mxCell>
+
+        <!-- Messages -->
+        <mxCell id="rm1" value="1. endInterview()" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170" y="170" as="sourcePoint"/>
+            <mxPoint x="405" y="170" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rm2" value="2. generateReport(session)" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="230" as="sourcePoint"/>
+            <mxPoint x="635" y="230" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rm3" value="3. getRecords()" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="635" y="290" as="sourcePoint"/>
+            <mxPoint x="405" y="290" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rm4" value="4. return InterviewRecord[]" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="340" as="sourcePoint"/>
+            <mxPoint x="635" y="340" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rm5" value="5. compileResults() + calculateFinalScore()" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="635" y="390" as="sourcePoint"/>
+            <mxPoint x="665" y="420" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rm6" value="6. create InterviewReport" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="635" y="470" as="sourcePoint"/>
+            <mxPoint x="1060" y="470" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rm7" value="7. store(report)" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="635" y="530" as="sourcePoint"/>
+            <mxPoint x="850" y="530" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rm8" value="8. return success" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="850" y="580" as="sourcePoint"/>
+            <mxPoint x="635" y="580" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rm9" value="9. return InterviewReport" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="635" y="630" as="sourcePoint"/>
+            <mxPoint x="405" y="630" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rm10" value="10. return report" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="680" as="sourcePoint"/>
+            <mxPoint x="170" y="680" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 5: Interview State Machine -->
+  <diagram id="state-machine" name="Interview State Lifecycle">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="sm_title" value="Interview State Lifecycle" style="text;html=1;fontSize=20;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="400" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Start -->
+        <mxCell id="sm_start" value="" style="ellipse;html=1;shape=doubleCircle;whiteSpace=wrap;aspect=fixed;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="530" y="80" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- States -->
+        <mxCell id="st_init" value="Interview&#xa;Initialized" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="150" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="st_ask" value="Asking&#xa;Question" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="260" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="st_wait" value="Awaiting&#xa;Candidate Response" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="370" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="st_eval" value="Evaluating&#xa;Answer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="480" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="st_store" value="Storing&#xa;Record" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="590" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="st_decide" value="Deciding&#xa;Next Step" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="700" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="st_complete" value="Interview&#xa;Complete" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="700" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="st_report" value="Generating&#xa;Report" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="800" width="140" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- End -->
+        <mxCell id="sm_end" value="" style="ellipse;html=1;shape=doubleCircle;whiteSpace=wrap;aspect=fixed;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="805" y="890" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Transitions — all label cells are flat siblings at root level -->
+        <mxCell id="tr0" style="endArrow=block;html=1;" edge="1" source="sm_start" target="st_init" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="tr1" style="endArrow=block;html=1;" edge="1" source="st_init" target="st_ask" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr1_l" value="startInterview()" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="tr1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="tr2" style="endArrow=block;html=1;" edge="1" source="st_ask" target="st_wait" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr2_l" value="question presented" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="tr2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="tr3" style="endArrow=block;html=1;" edge="1" source="st_wait" target="st_eval" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr3_l" value="answer received" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="tr3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="tr4" style="endArrow=block;html=1;" edge="1" source="st_eval" target="st_store" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr4_l" value="evaluation done" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="tr4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="tr5" style="endArrow=block;html=1;" edge="1" source="st_store" target="st_decide" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr5_l" value="record saved" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="tr5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="tr6" style="endArrow=block;html=1;curved=1;" edge="1" source="st_decide" target="st_ask" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="280" y="725"/>
+              <mxPoint x="280" y="285"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tr6_l" value="[more questions]" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="tr6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-20" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="tr7" style="endArrow=block;html=1;" edge="1" source="st_decide" target="st_complete" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr7_l" value="[no more questions]" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="tr7">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="tr8" style="endArrow=block;html=1;" edge="1" source="st_complete" target="st_report" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr8_l" value="generateReport()" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="tr8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="tr9" style="endArrow=block;html=1;" edge="1" source="st_report" target="sm_end" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr9_l" value="report exported" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="tr9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 6: Data Storage Schema -->
+  <diagram id="data-storage" name="Data Storage Schema">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="ds_title" value="Voice-Based Interview Agent — Data Storage Schema" style="text;html=1;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="800" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Tech stack note -->
+        <mxCell id="ds_tech" value="Primary Store: PostgreSQL  |  Session Cache: Redis" style="text;html=1;fontSize=13;fontStyle=2;align=center;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="550" y="68" width="500" height="28" as="geometry"/>
+        </mxCell>
+
+        <!-- candidates table -->
+        <mxCell id="tbl_candidates" value="&lt;b&gt;candidates&lt;/b&gt;" style="swimlane;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=0;align=center;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="130" width="260" height="210" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_candidates_cols" value="[PK] candidate_id   UUID&#xa;      name          VARCHAR(120)&#xa;      email         VARCHAR(255) UNIQUE&#xa;      experience_level  VARCHAR(20)&#xa;      skill_scores   JSONB&#xa;      created_at    TIMESTAMPTZ" style="text;align=left;verticalAlign=top;spacingLeft=8;overflow=hidden;rotatable=0;html=1;fontSize=12;" vertex="1" parent="tbl_candidates">
+          <mxGeometry y="26" width="260" height="184" as="geometry"/>
+        </mxCell>
+
+        <!-- interview_sessions table -->
+        <mxCell id="tbl_sessions" value="&lt;b&gt;interview_sessions&lt;/b&gt;" style="swimlane;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=0;align=center;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="420" y="130" width="290" height="230" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_sessions_cols" value="[PK] session_id     UUID&#xa;[FK] candidate_id   UUID&#xa;      started_at    TIMESTAMPTZ&#xa;      ended_at      TIMESTAMPTZ&#xa;      total_score   NUMERIC(5,2)&#xa;      status        VARCHAR(20)&#xa;      created_at    TIMESTAMPTZ" style="text;align=left;verticalAlign=top;spacingLeft=8;overflow=hidden;rotatable=0;html=1;fontSize=12;" vertex="1" parent="tbl_sessions">
+          <mxGeometry y="26" width="290" height="204" as="geometry"/>
+        </mxCell>
+
+        <!-- conversation_logs table -->
+        <mxCell id="tbl_convlogs" value="&lt;b&gt;conversation_logs&lt;/b&gt;" style="swimlane;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=0;align=center;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="790" y="130" width="280" height="210" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_convlogs_cols" value="[PK] log_id         UUID&#xa;[FK] session_id     UUID&#xa;      role          VARCHAR(20)&#xa;      content       TEXT&#xa;      timestamp     TIMESTAMPTZ" style="text;align=left;verticalAlign=top;spacingLeft=8;overflow=hidden;rotatable=0;html=1;fontSize=12;" vertex="1" parent="tbl_convlogs">
+          <mxGeometry y="26" width="280" height="184" as="geometry"/>
+        </mxCell>
+
+        <!-- Redis cache note -->
+        <mxCell id="redis_note" value="&lt;b&gt;Redis (Session Cache)&lt;/b&gt;&#xa;Key: session:{session_id}&#xa;Value: ConversationSession JSON&#xa;TTL: interview duration + 1h" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;fontStyle=0;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="130" width="240" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- interview_records table -->
+        <mxCell id="tbl_records" value="&lt;b&gt;interview_records&lt;/b&gt;" style="swimlane;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=0;align=center;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="440" width="290" height="230" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_records_cols" value="[PK] record_id        UUID&#xa;[FK] session_id        UUID&#xa;      question_id       UUID&#xa;      question_text     TEXT&#xa;      question_skill    VARCHAR(80)&#xa;      question_difficulty VARCHAR(20)&#xa;      candidate_answer  TEXT&#xa;      timestamp         TIMESTAMPTZ" style="text;align=left;verticalAlign=top;spacingLeft=8;overflow=hidden;rotatable=0;html=1;fontSize=12;" vertex="1" parent="tbl_records">
+          <mxGeometry y="26" width="290" height="204" as="geometry"/>
+        </mxCell>
+
+        <!-- evaluation_results table -->
+        <mxCell id="tbl_evals" value="&lt;b&gt;evaluation_results&lt;/b&gt;" style="swimlane;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=0;align=center;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="450" y="440" width="280" height="220" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_evals_cols" value="[PK] eval_id          UUID&#xa;[FK] record_id         UUID&#xa;      score            NUMERIC(4,2)&#xa;      feedback         TEXT&#xa;      strengths        TEXT[]&#xa;      weaknesses       TEXT[]&#xa;      created_at       TIMESTAMPTZ" style="text;align=left;verticalAlign=top;spacingLeft=8;overflow=hidden;rotatable=0;html=1;fontSize=12;" vertex="1" parent="tbl_evals">
+          <mxGeometry y="26" width="280" height="194" as="geometry"/>
+        </mxCell>
+
+        <!-- interview_reports table -->
+        <mxCell id="tbl_reports" value="&lt;b&gt;interview_reports&lt;/b&gt;" style="swimlane;startSize=26;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=0;align=center;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="820" y="440" width="290" height="250" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_reports_cols" value="[PK] report_id        UUID&#xa;[FK] session_id        UUID&#xa;[FK] candidate_id      UUID&#xa;      total_score      NUMERIC(5,2)&#xa;      strengths        TEXT[]&#xa;      weaknesses       TEXT[]&#xa;      summary          TEXT&#xa;      export_url       TEXT&#xa;      created_at       TIMESTAMPTZ" style="text;align=left;verticalAlign=top;spacingLeft=8;overflow=hidden;rotatable=0;html=1;fontSize=12;" vertex="1" parent="tbl_reports">
+          <mxGeometry y="26" width="290" height="224" as="geometry"/>
+        </mxCell>
+
+        <!-- FOREIGN KEY RELATIONSHIPS — all flat siblings at root level -->
+
+        <!-- candidates 1 --< interview_sessions -->
+        <mxCell id="fk1" style="endArrow=ERmanyToOne;startArrow=ERmandOne;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="tbl_candidates" target="tbl_sessions" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="fk1_l" value="1 : N" style="edgeLabel;html=1;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="fk1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- interview_sessions 1 --< conversation_logs -->
+        <mxCell id="fk2" style="endArrow=ERmanyToOne;startArrow=ERmandOne;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="tbl_sessions" target="tbl_convlogs" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="fk2_l" value="1 : N" style="edgeLabel;html=1;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="fk2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- interview_sessions 1 --< interview_records -->
+        <mxCell id="fk3" style="endArrow=ERmanyToOne;startArrow=ERmandOne;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="tbl_sessions" target="tbl_records" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="565" y="390"/>
+              <mxPoint x="225" y="390"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk3_l" value="1 : N" style="edgeLabel;html=1;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="fk3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- interview_records 1 --1 evaluation_results -->
+        <mxCell id="fk4" style="endArrow=ERmanyToOne;startArrow=ERmandOne;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="tbl_records" target="tbl_evals" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="fk4_l" value="1 : 1" style="edgeLabel;html=1;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="fk4">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- interview_sessions 1 --1 interview_reports -->
+        <mxCell id="fk5" style="endArrow=ERmanyToOne;startArrow=ERmandOne;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="tbl_sessions" target="tbl_reports" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="245"/>
+              <mxPoint x="760" y="565"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk5_l" value="1 : 1" style="edgeLabel;html=1;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="fk5">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- candidates 1 --N interview_reports -->
+        <mxCell id="fk6" style="endArrow=ERmanyToOne;startArrow=ERmandOne;html=1;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="tbl_candidates" target="tbl_reports" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="700"/>
+              <mxPoint x="965" y="700"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk6_l" value="1 : N" style="edgeLabel;html=1;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="fk6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="ds_legend_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="750" width="340" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="ds_legend_title" value="Legend" style="text;html=1;fontSize=12;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="90" y="756" width="80" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="ds_leg1" value="[PK]  Primary Key" style="text;html=1;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="100" y="778" width="140" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="ds_leg2" value="[FK]  Foreign Key" style="text;html=1;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="100" y="800" width="140" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="ds_leg3" value="1:N  One-to-Many" style="text;html=1;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="260" y="778" width="140" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="ds_leg4" value="1:1  One-to-One" style="text;html=1;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="260" y="800" width="140" height="20" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+</mxfile>
