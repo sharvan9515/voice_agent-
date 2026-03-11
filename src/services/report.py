@@ -1,21 +1,18 @@
 from __future__ import annotations
 
 import json
-import re
 import uuid
 from datetime import datetime, timezone
 from typing import List
 
-import anthropic
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.config.settings import settings
+from src.config.openai_client import chat_json
 from src.models.interview_report import InterviewReport
 from src.repositories.record import RecordRepository
 from src.repositories.report import ReportRepository
 from src.repositories.session import SessionRepository
 from src.schemas.report import ReportExport, ReportResponse
-from src.services.question import get_anthropic_client
 from src.utils.errors import ExternalServiceError, NotFoundError
 from src.utils.logger import logger
 
@@ -109,9 +106,7 @@ class ReportService:
         strengths: List[str],
         weaknesses: List[str],
     ) -> dict:
-        client = get_anthropic_client()
-
-        prompt = f"""Generate a comprehensive evaluation report for a candidate interview.
+        user_prompt = f"""Generate a comprehensive evaluation report for a candidate interview.
 
 OVERALL SCORE: {total_score:.1f}/10
 
@@ -125,30 +120,9 @@ Write a professional narrative summary and refine the strengths/weaknesses lists
 Return ONLY the JSON object."""
 
         try:
-            response = await client.messages.create(
-                model=settings.CLAUDE_MODEL,
-                max_tokens=settings.CLAUDE_MAX_TOKENS,
-                system=REPORT_SYSTEM_PROMPT,
-                messages=[{"role": "user", "content": prompt}],
-            )
-
-            content = response.content[0].text.strip()
-            try:
-                data = json.loads(content)
-            except json.JSONDecodeError:
-                json_match = re.search(r"\{.*\}", content, re.DOTALL)
-                if json_match:
-                    data = json.loads(json_match.group())
-                else:
-                    data = {
-                        "summary": content,
-                        "overall_strengths": strengths,
-                        "overall_weaknesses": weaknesses,
-                    }
-            return data
-
+            return await chat_json(REPORT_SYSTEM_PROMPT, user_prompt)
         except Exception as exc:
-            logger.error("Report narrative generation error: {error}", error=str(exc))
+            logger.error("Report narrative generation error: {}", str(exc))
             # Return fallback narrative
             return {
                 "summary": (

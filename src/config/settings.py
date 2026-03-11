@@ -15,12 +15,10 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://localhost:6379"
     REDIS_SESSION_TTL_SECONDS: int = 7200
 
-    ANTHROPIC_API_KEY: str
-    CLAUDE_MODEL: str = "claude-sonnet-4-6"
-    CLAUDE_MAX_TOKENS: int = 2048
-
-    # OpenAI — used for both STT (Whisper) and TTS
-    OPENAI_API_KEY: str = ""
+    # OpenAI — LLM + STT (Whisper) + TTS (single key for everything)
+    OPENAI_API_KEY: str
+    OPENAI_MODEL: str = "gpt-4o"
+    OPENAI_MAX_TOKENS: int = 2048
     WHISPER_MODEL: str = "whisper-1"
     OPENAI_TTS_MODEL: str = "tts-1"
     OPENAI_TTS_VOICE: str = "alloy"  # alloy | echo | fable | onyx | nova | shimmer
