@@ -1,9 +1,9 @@
-# Environment
+# ── Environment ───────────────────────────────────────────────
 .env
 .env.local
 .env.*.local
 
-# Python
+# ── Python ────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *$py.class
@@ -26,39 +26,55 @@ wheels/
 *.egg
 MANIFEST
 
-# Virtual environments
+# ── Virtual environments ───────────────────────────────────────
 .venv/
 venv/
 ENV/
 env/
+.virtualenv/
 
-# Testing
+# ── Testing / Coverage ─────────────────────────────────────────
 .pytest_cache/
 .coverage
 htmlcov/
 .tox/
 *.cover
 *.coveragerc
+coverage.xml
 
-# IDEs
+# ── IDEs ──────────────────────────────────────────────────────
 .idea/
 .vscode/
 *.swp
 *.swo
 .DS_Store
+Thumbs.db
 
-# Uploads (keep directory)
+# ── Uploads (keep placeholder) ────────────────────────────────
 uploads/*
 !uploads/.gitkeep
 
-# Logs (keep directory)
+# ── Logs (keep placeholder) ───────────────────────────────────
 logs/*
 !logs/.gitkeep
 
-# Alembic versions (committed versions only)
-# alembic/versions/*.py  # Comment out if you want to track migrations
-
-# Misc
+# ── Temp / OS artifacts ───────────────────────────────────────
 *.log
 *.tmp
 *.temp
+null
+nul
+*.bak
+
+# ── Claude internal ───────────────────────────────────────────
+.claude/
+
+# ── Docker volumes / local data ───────────────────────────────
+postgres_data/
+redis_data/
+
+# ── Type checking ─────────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
