@@ -315,8 +315,25 @@ class RealtimeInterviewSession:
 
                 logger.info("Realtime session created | session={}", self.session_id)
 
-                # Configure the session
+                # Send session.update to configure the session
                 await self._configure_session(openai_ws)
+
+                # Wait for session.updated confirmation before proceeding.
+                # OpenAI may buffer a few intermediate events before session.updated;
+                # drain them until we see it (or give up after 10 events).
+                for _ in range(10):
+                    raw2 = await openai_ws.recv()
+                    ev = json.loads(raw2)
+                    if ev.get("type") == "session.updated":
+                        logger.debug("session.updated received | session={}", self.session_id)
+                        break
+                    logger.debug("Pre-ready event: {} | session={}", ev.get("type"), self.session_id)
+
+                # Trigger the interviewer's opening greeting NOW — session is fully
+                # configured and the relay loop is about to start so all response
+                # events will be captured.
+                await openai_ws.send(json.dumps({"type": "response.create"}))
+                logger.info("Opening response triggered | session={}", self.session_id)
 
                 # Notify client that we're ready
                 await client_ws.send_text(json.dumps({
@@ -382,12 +399,6 @@ class RealtimeInterviewSession:
         await openai_ws.send(json.dumps(session_config))
         logger.debug("Realtime session configured | session={} | topics={}",
                       self.session_id, self._allowed_topics)
-
-        # Explicitly trigger the interviewer's opening greeting.
-        # The mic starts muted on the client side (audio-gated answer window),
-        # so server VAD will never fire on its own to kick off the first turn.
-        await openai_ws.send(json.dumps({"type": "response.create"}))
-        logger.debug("Initial response triggered | session={}", self.session_id)
 
     async def _relay_client_to_openai(self, client_ws: WebSocket, openai_ws) -> None:
         """Forward audio and control messages from browser client to OpenAI."""
