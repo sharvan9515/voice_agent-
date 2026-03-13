@@ -1,7 +1,11 @@
 /**
  * RealtimeInterviewRoom — conversational voice interview powered by
  * OpenAI Realtime API. Audio streams bidirectionally via WebSocket.
- * No manual "send answer" — the model uses VAD to detect speech turns.
+ *
+ * Audio phases:
+ *  - Assistant speaking  → mic is muted (gated at frame level)
+ *  - Candidate's turn    → mic unmuted, 60-second countdown timer shown
+ *  - Timer expires       → mic muted, backend notified to move on
  */
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { forceEndInterview } from '../api/client'
@@ -15,6 +19,48 @@ interface Props {
 
 type SessionPhase = 'connecting' | 'ready' | 'active' | 'ended' | 'evaluating'
 
+const ANSWER_SECONDS = 60
+
+// ── Countdown ring SVG ────────────────────────────────────────────────────
+
+function CountdownRing({ secondsLeft }: { secondsLeft: number }) {
+  const radius = 32
+  const circ = 2 * Math.PI * radius
+  const pct = secondsLeft / ANSWER_SECONDS
+  const dash = pct * circ
+  const color = secondsLeft > 30 ? '#34d399' : secondsLeft > 10 ? '#fbbf24' : '#f87171'
+
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <div className="relative inline-flex items-center justify-center w-20 h-20">
+        <svg className="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r={radius} fill="none" stroke="#1e293b" strokeWidth="6" />
+          <circle
+            cx="40"
+            cy="40"
+            r={radius}
+            fill="none"
+            stroke={color}
+            strokeWidth="6"
+            strokeLinecap="round"
+            strokeDasharray={`${dash} ${circ - dash}`}
+            style={{ transition: 'stroke-dasharray 0.5s linear, stroke 0.5s' }}
+          />
+        </svg>
+        <div className="absolute text-center">
+          <span className="text-xl font-bold text-white">{secondsLeft}</span>
+          <span className="block text-[10px] text-slate-400 leading-none">sec</span>
+        </div>
+      </div>
+      <p className="text-xs font-medium text-emerald-400 uppercase tracking-wider">
+        Your turn — answer now
+      </p>
+    </div>
+  )
+}
+
+// ── Main component ────────────────────────────────────────────────────────
+
 export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
   const [conversation, setConversation] = useState<ConversationEntry[]>([])
   const [phase, setPhase] = useState<SessionPhase>('connecting')
@@ -23,6 +69,11 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
   const [questionsAsked, setQuestionsAsked] = useState(0)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
+  // Answer timer state — null means timer is not running
+  const [answerTimeLeft, setAnswerTimeLeft] = useState<number | null>(null)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const timerStartedRef = useRef(false)
+
   const conversationEndRef = useRef<HTMLDivElement>(null)
   const rt = useRealtimeSocket()
 
@@ -30,6 +81,46 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
   useEffect(() => {
     conversationEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [conversation, currentAssistantText])
+
+  // ── Timer management ───────────────────────────────────────────────────
+
+  const clearAnswerTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
+    }
+    setAnswerTimeLeft(null)
+    timerStartedRef.current = false
+  }, [])
+
+  const startAnswerTimer = useCallback(() => {
+    // Prevent double-starting
+    if (timerStartedRef.current) return
+    timerStartedRef.current = true
+
+    setAnswerTimeLeft(ANSWER_SECONDS)
+
+    timerRef.current = setInterval(() => {
+      setAnswerTimeLeft(prev => {
+        if (prev === null || prev <= 1) {
+          clearInterval(timerRef.current!)
+          timerRef.current = null
+          timerStartedRef.current = false
+          // Time's up — mute mic and notify backend
+          rt.sendAnswerTimeout()
+          return null
+        }
+        return prev - 1
+      })
+    }, 1000)
+  }, [rt])
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current)
+    }
+  }, [])
 
   // ── Handle events from the realtime session ──────────────────────────────
 
@@ -42,6 +133,9 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
       case 'assistant_transcript_delta':
         setCurrentAssistantText(prev => prev + (event.delta ?? ''))
         if (phase !== 'active') setPhase('active')
+        // Assistant is speaking — clear any running answer timer
+        clearAnswerTimer()
+        rt.muteAudio()
         break
 
       case 'assistant_transcript':
@@ -52,6 +146,12 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
           ])
         }
         setCurrentAssistantText('')
+        // Assistant finished speaking — open candidate's 1-minute window
+        // Small delay to let audio finish playing
+        setTimeout(() => {
+          rt.unmuteAudio()
+          startAnswerTimer()
+        }, 800)
         break
 
       case 'user_transcript':
@@ -62,21 +162,34 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
           ])
           setQuestionsAsked(prev => prev + 1)
         }
+        // Candidate answered — clear the timer (backend will handle next question flow)
+        clearAnswerTimer()
+        rt.muteAudio()
+        break
+
+      case 'speech_started':
+        // Candidate started speaking — timer keeps running but stop blinking
         break
 
       case 'interview_complete':
         setPhase('evaluating')
+        clearAnswerTimer()
         rt.stopMic()
         if (event.questions_asked !== undefined) setQuestionsAsked(event.questions_asked)
-        // Wait for post-interview evaluation to complete, then navigate
         setTimeout(() => onComplete(setup.sessionId), 5000)
+        break
+
+      case 'guardrail_violation':
+        // Server detected a violation — show brief notice
+        setErrorMsg(`⚠️ ${event.message ?? 'Please respond in English and stay on topic.'}`)
+        setTimeout(() => setErrorMsg(null), 4000)
         break
 
       case 'error':
         setErrorMsg(event.message ?? 'An error occurred')
         break
     }
-  }, [phase, setup.sessionId, onComplete, rt])
+  }, [phase, setup.sessionId, onComplete, rt, startAnswerTimer, clearAnswerTimer])
 
   // ── Connect + start mic on mount ──────────────────────────────────────────
 
@@ -85,6 +198,7 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
     const timer = setTimeout(async () => {
       try {
         await rt.startMic()
+        // Mic starts muted — will unmute when assistant finishes first message
       } catch (err) {
         setErrorMsg('Could not access microphone. Please allow mic access and reload.')
       }
@@ -92,6 +206,7 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
 
     return () => {
       clearTimeout(timer)
+      clearAnswerTimer()
       rt.stopMic()
       rt.disconnect()
     }
@@ -103,6 +218,7 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
     if (!confirm('End the interview now and generate the report?')) return
     setIsEnding(true)
     setPhase('evaluating')
+    clearAnswerTimer()
     rt.stopMic()
     rt.disconnect()
     try {
@@ -115,13 +231,16 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
 
   // ── Status indicator ──────────────────────────────────────────────────────
 
+  const isCandidateTurn = answerTimeLeft !== null && !rt.assistantSpeaking
+  const isAssistantTurn = rt.assistantSpeaking || (answerTimeLeft === null && phase === 'active' && !isCandidateTurn)
+
   const statusText = (() => {
     if (phase === 'connecting') return 'Connecting to interviewer…'
-    if (phase === 'ready') return 'Connected — start speaking'
+    if (phase === 'ready') return 'Connected — waiting for interviewer'
     if (phase === 'evaluating') return 'Evaluating your responses…'
     if (phase === 'ended') return 'Interview complete'
     if (rt.assistantSpeaking) return 'Interviewer speaking…'
-    if (rt.micActive) return 'Listening…'
+    if (isCandidateTurn) return 'Your turn — speak now'
     return 'Ready'
   })()
 
@@ -129,7 +248,7 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
     if (phase === 'connecting') return 'text-amber-400'
     if (phase === 'evaluating') return 'text-indigo-400'
     if (rt.assistantSpeaking) return 'text-purple-400'
-    if (rt.micActive) return 'text-emerald-400'
+    if (isCandidateTurn) return 'text-emerald-400'
     return 'text-slate-400'
   })()
 
@@ -208,9 +327,9 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
           <div ref={conversationEndRef} />
         </div>
 
-        {/* Error */}
+        {/* Guardrail / Error notice */}
         {errorMsg && (
-          <p className="text-xs text-red-400 text-center bg-red-900/20 border border-red-800/40 rounded-xl px-4 py-2">
+          <p className="text-xs text-amber-400 text-center bg-amber-900/20 border border-amber-800/40 rounded-xl px-4 py-2">
             {errorMsg}
           </p>
         )}
@@ -226,46 +345,47 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
           </div>
         )}
 
-        {/* Status + Mic visualizer */}
+        {/* Status + visualizer */}
         <div className="flex flex-col items-center gap-4 pb-4">
           <p className={`text-xs font-medium uppercase tracking-wider ${statusColor}`}>
             {statusText}
           </p>
 
-          {/* Mic indicator */}
-          <div className="relative">
-            <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 ${
-              phase === 'ended' || phase === 'evaluating'
-                ? 'bg-slate-800 text-slate-500'
-                : rt.assistantSpeaking
-                ? 'bg-purple-600/30 text-purple-300'
-                : rt.micActive
-                ? 'bg-indigo-600 text-white'
-                : 'bg-slate-700 text-slate-500'
-            }`}>
-              {phase === 'evaluating' ? (
-                /* Checkmark icon */
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-              ) : rt.assistantSpeaking ? (
-                /* Speaker icon */
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.757 3.63 8.25 4.51 8.25H6.75Z" />
-                </svg>
-              ) : (
-                /* Mic icon */
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
-                </svg>
+          {/* Countdown timer (candidate's turn) OR mic/speaker indicator */}
+          {isCandidateTurn ? (
+            <CountdownRing secondsLeft={answerTimeLeft!} />
+          ) : (
+            <div className="relative">
+              <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 ${
+                phase === 'ended' || phase === 'evaluating'
+                  ? 'bg-slate-800 text-slate-500'
+                  : rt.assistantSpeaking
+                  ? 'bg-purple-600/30 text-purple-300'
+                  : rt.micActive
+                  ? 'bg-slate-700 text-slate-400'
+                  : 'bg-slate-700 text-slate-500'
+              }`}>
+                {phase === 'evaluating' ? (
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                ) : rt.assistantSpeaking ? (
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.757 3.63 8.25 4.51 8.25H6.75Z" />
+                  </svg>
+                ) : (
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
+                  </svg>
+                )}
+              </div>
+
+              {/* Pulse ring when assistant is speaking */}
+              {rt.assistantSpeaking && (
+                <div className="absolute inset-0 rounded-full border-2 border-purple-400/50 animate-ping" />
               )}
             </div>
-
-            {/* Pulse ring when recording */}
-            {rt.micActive && !rt.assistantSpeaking && phase === 'active' && (
-              <div className="absolute inset-0 rounded-full border-2 border-indigo-400/50 animate-ping" />
-            )}
-          </div>
+          )}
 
           <p className="text-xs text-slate-600 text-center max-w-sm">
             {phase === 'evaluating'
@@ -273,8 +393,10 @@ export default function RealtimeInterviewRoom({ setup, onComplete }: Props) {
               : phase === 'ended'
               ? 'Thank you for completing the interview.'
               : rt.assistantSpeaking
-              ? 'The interviewer is speaking. You can interrupt at any time.'
-              : 'Speak naturally — the interviewer will respond automatically.'}
+              ? 'The interviewer is speaking…'
+              : isCandidateTurn
+              ? 'Speak your answer clearly. The timer stops when you finish.'
+              : 'Waiting for the interviewer…'}
           </p>
         </div>
       </div>

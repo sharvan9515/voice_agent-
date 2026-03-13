@@ -18,6 +18,24 @@ export interface ConversationEntry {
   timestamp: number
 }
 
+export interface QAEvaluation {
+  score: number
+  feedback: string
+  evaluation_reasoning: string
+  metrics_used: string[]
+  strengths: string[]
+  weaknesses: string[]
+}
+
+export interface QADetail {
+  index: number
+  question: string
+  skill: string
+  difficulty: string
+  answer: string
+  evaluation: QAEvaluation | null
+}
+
 export interface Report {
   id: string
   session_id: string
@@ -26,6 +44,7 @@ export interface Report {
   strengths: string[]
   weaknesses: string[]
   summary: string
+  qa_details: QADetail[] | null
   created_at: string
 }
 

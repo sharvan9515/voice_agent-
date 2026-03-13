@@ -68,17 +68,37 @@ class ReportService:
         unique_strengths = list(dict.fromkeys(all_strengths))[:10]
         unique_weaknesses = list(dict.fromkeys(all_weaknesses))[:10]
 
-        # Build interview summary for Claude
+        # Build per-question breakdown (qa_details) and interview summary for narrative
         interview_summary = []
+        qa_details = []
         for i, record in enumerate(records, 1):
             eval_info = ""
+            eval_dict = None
             if record.evaluation:
+                eval_dict = {
+                    "score": record.evaluation.score,
+                    "feedback": record.evaluation.feedback,
+                    "evaluation_reasoning": getattr(record.evaluation, "evaluation_reasoning", ""),
+                    "metrics_used": getattr(record.evaluation, "metrics_used", []),
+                    "strengths": record.evaluation.strengths or [],
+                    "weaknesses": record.evaluation.weaknesses or [],
+                }
                 eval_info = f"Score: {record.evaluation.score}/10. Feedback: {record.evaluation.feedback}"
+
             interview_summary.append(
                 f"Q{i} ({record.question_skill} - {record.question_difficulty}): {record.question_text}\n"
                 f"Answer: {record.candidate_answer}\n"
                 f"Evaluation: {eval_info}"
             )
+
+            qa_details.append({
+                "index": i,
+                "question": record.question_text,
+                "skill": record.question_skill,
+                "difficulty": record.question_difficulty,
+                "answer": record.candidate_answer,
+                "evaluation": eval_dict,
+            })
 
         narrative = await self._generate_narrative(
             interview_summary="\n\n".join(interview_summary),
@@ -94,6 +114,7 @@ class ReportService:
             strengths=narrative["overall_strengths"],
             weaknesses=narrative["overall_weaknesses"],
             summary=narrative["summary"],
+            qa_details=qa_details,
         )
         report = await self.report_repo.create(report)
         logger.info("Report generated | report_id={rid} | score={score}", rid=report.id, score=total_score)

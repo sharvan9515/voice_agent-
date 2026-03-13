@@ -1,11 +1,153 @@
 import { useEffect, useState } from 'react'
 import { getReport, generateReport } from '../api/client'
-import { Report } from '../types'
+import { Report, QADetail } from '../types'
 
 interface Props {
   sessionId: string
   onRestart: () => void
 }
+
+// ── Score badge for individual Q&A ──────────────────────────────────────────
+
+function ScoreBadge({ score }: { score: number }) {
+  const color =
+    score >= 8 ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' :
+    score >= 6 ? 'bg-blue-500/20 text-blue-400 border-blue-500/40' :
+    score >= 4 ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' :
+    'bg-red-500/20 text-red-400 border-red-500/40'
+  return (
+    <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${color}`}>
+      {score.toFixed(1)}/10
+    </span>
+  )
+}
+
+// ── Collapsible Q&A card ──────────────────────────────────────────────────
+
+function QACard({ qa, defaultOpen = false }: { qa: QADetail; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen)
+  const eval_ = qa.evaluation
+
+  return (
+    <div className="border border-slate-700 rounded-xl overflow-hidden">
+      {/* Header — always visible */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-start gap-3 px-4 py-3 text-left hover:bg-slate-800/50 transition-colors"
+      >
+        <span className="text-slate-500 text-xs font-mono mt-0.5 w-5 flex-shrink-0">Q{qa.index}</span>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm text-slate-200 leading-snug">{qa.question}</p>
+          <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+            {qa.skill && (
+              <span className="text-[10px] text-slate-500 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">
+                {qa.skill}
+              </span>
+            )}
+            {qa.difficulty && (
+              <span className="text-[10px] text-slate-500 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 capitalize">
+                {qa.difficulty}
+              </span>
+            )}
+            {eval_ && <ScoreBadge score={eval_.score} />}
+          </div>
+        </div>
+        <svg
+          className={`w-4 h-4 text-slate-500 flex-shrink-0 mt-0.5 transition-transform ${open ? 'rotate-180' : ''}`}
+          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="m19 9-7 7-7-7" />
+        </svg>
+      </button>
+
+      {/* Expanded content */}
+      {open && (
+        <div className="px-4 pb-4 space-y-4 border-t border-slate-700/60">
+          {/* Candidate answer */}
+          <div className="pt-3">
+            <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Candidate Answer</p>
+            <p className="text-sm text-slate-300 leading-relaxed bg-slate-800/50 rounded-lg px-3 py-2 border border-slate-700/50">
+              {qa.answer || <span className="text-slate-600 italic">No answer recorded</span>}
+            </p>
+          </div>
+
+          {eval_ && (
+            <>
+              {/* Feedback */}
+              <div>
+                <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Feedback</p>
+                <p className="text-sm text-slate-300 leading-relaxed">{eval_.feedback}</p>
+              </div>
+
+              {/* Evaluation reasoning */}
+              {eval_.evaluation_reasoning && (
+                <div>
+                  <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">
+                    Why This Score
+                  </p>
+                  <p className="text-sm text-slate-400 leading-relaxed italic">
+                    {eval_.evaluation_reasoning}
+                  </p>
+                </div>
+              )}
+
+              {/* Metrics used */}
+              {eval_.metrics_used.length > 0 && (
+                <div>
+                  <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">
+                    Evaluation Metrics
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {eval_.metrics_used.map((m, i) => (
+                      <span
+                        key={i}
+                        className="text-[10px] text-indigo-300 bg-indigo-900/30 border border-indigo-500/30 px-2 py-0.5 rounded-full capitalize"
+                      >
+                        {m.replace(/_/g, ' ')}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Strengths / Weaknesses for this answer */}
+              {(eval_.strengths.length > 0 || eval_.weaknesses.length > 0) && (
+                <div className="grid grid-cols-2 gap-3">
+                  {eval_.strengths.length > 0 && (
+                    <div>
+                      <p className="text-[10px] text-emerald-400 uppercase tracking-wider font-semibold mb-1">Strengths</p>
+                      <ul className="space-y-0.5">
+                        {eval_.strengths.map((s, i) => (
+                          <li key={i} className="text-xs text-slate-400 flex items-start gap-1">
+                            <span className="text-emerald-500 flex-shrink-0">+</span>{s}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {eval_.weaknesses.length > 0 && (
+                    <div>
+                      <p className="text-[10px] text-amber-400 uppercase tracking-wider font-semibold mb-1">Gaps</p>
+                      <ul className="space-y-0.5">
+                        {eval_.weaknesses.map((w, i) => (
+                          <li key={i} className="text-xs text-slate-400 flex items-start gap-1">
+                            <span className="text-amber-500 flex-shrink-0">−</span>{w}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Score ring ────────────────────────────────────────────────────────────
 
 function ScoreRing({ score }: { score: number }) {
   const pct = Math.min(100, Math.max(0, (score / 10) * 100))
@@ -189,6 +331,26 @@ export default function ReportView({ sessionId, onRestart }: Props) {
             </ul>
           </div>
         </div>
+
+        {/* Q&A Breakdown */}
+        {report.qa_details && report.qa_details.length > 0 && (
+          <div className="animate-slide-up">
+            <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+              </svg>
+              Question-by-Question Breakdown
+              <span className="text-slate-600 font-normal normal-case tracking-normal">
+                ({report.qa_details.length} {report.qa_details.length === 1 ? 'question' : 'questions'})
+              </span>
+            </h2>
+            <div className="space-y-2">
+              {report.qa_details.map((qa, i) => (
+                <QACard key={i} qa={qa} defaultOpen={i === 0} />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Session ID */}
         <p className="text-center text-xs text-slate-600">

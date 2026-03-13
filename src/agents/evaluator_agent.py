@@ -16,18 +16,34 @@ from src.utils.logger import logger
 class EvaluationOutput(BaseModel):
     """Structured output for answer evaluation."""
     score: float = Field(ge=0, le=10, description="Score from 0 to 10")
-    feedback: str = Field(description="Constructive feedback")
-    strengths: List[str] = Field(default_factory=list)
-    weaknesses: List[str] = Field(default_factory=list)
+    feedback: str = Field(description="Constructive feedback on the answer")
+    strengths: List[str] = Field(default_factory=list, description="Specific strengths shown")
+    weaknesses: List[str] = Field(default_factory=list, description="Specific gaps or weaknesses")
+    evaluation_reasoning: str = Field(
+        default="",
+        description="Step-by-step reasoning explaining why this score was given",
+    )
+    metrics_used: List[str] = Field(
+        default_factory=list,
+        description="List of evaluation metrics applied (e.g. 'accuracy', 'depth', 'clarity', 'practicality', 'problem-solving')",
+    )
 
 
 SYSTEM_PROMPT = """You are an expert interview evaluator.
-Objectively evaluate a candidate's answer on a scale of 0-10 based on:
-- Accuracy and correctness
-- Depth of understanding
-- Clarity of explanation
-- Practical applicability
-- Problem-solving approach"""
+Objectively evaluate a candidate's answer on a scale of 0-10.
+
+Evaluation metrics to consider (apply only those relevant to the question):
+- accuracy: Correctness of facts, concepts, and claims
+- depth: Depth of understanding shown (surface vs expert-level)
+- clarity: How clearly and concisely the answer was communicated
+- practicality: Real-world applicability and practical examples given
+- problem_solving: Systematic approach to breaking down and solving problems
+- completeness: Whether all key aspects of the question were addressed
+
+For each evaluation, you MUST:
+1. List which metrics you applied (metrics_used)
+2. Provide step-by-step reasoning for your score (evaluation_reasoning)
+3. Give constructive written feedback (feedback)"""
 
 HUMAN_TEMPLATE = """Evaluate this interview response:
 
@@ -38,7 +54,7 @@ DIFFICULTY: {question_difficulty}
 RUBRIC: {rubric}
 {role_context}
 
-Return your evaluation."""
+Return your evaluation with score, feedback, strengths, weaknesses, evaluation_reasoning, and metrics_used."""
 
 
 DIFFICULTY_RUBRICS = {

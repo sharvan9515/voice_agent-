@@ -3,10 +3,11 @@
  * which relays audio to/from the OpenAI Realtime API.
  *
  * Handles:
- *  - Mic capture → PCM16 24kHz → base64 → WS send
+ *  - Mic capture → PCM16 24kHz → base64 → WS send (gated by audioMuted ref)
  *  - WS receive → base64 → PCM16 → AudioContext playback
  *  - Transcript events (user + assistant)
  *  - Evaluation and interview_complete events
+ *  - 1-minute answer window: muteAudio/unmuteAudio controls
  */
 import { useRef, useState, useCallback, useEffect } from 'react'
 import {
@@ -31,6 +32,7 @@ export interface RealtimeEvent {
     | 'interview_complete'
     | 'error'
     | 'pong'
+    | 'guardrail_violation'
   audio?: string          // base64 PCM16
   delta?: string          // streaming transcript chunk
   text?: string           // full transcript
@@ -39,16 +41,21 @@ export interface RealtimeEvent {
   skill?: string
   questions_asked?: number
   total_score?: number
+  violation_type?: string
 }
 
 export interface RealtimeControls {
   connected: boolean
   micActive: boolean
   assistantSpeaking: boolean
+  audioMuted: boolean
   connect: (sessionId: string, onEvent: (e: RealtimeEvent) => void) => void
   disconnect: () => void
   startMic: () => Promise<void>
   stopMic: () => void
+  muteAudio: () => void
+  unmuteAudio: () => void
+  sendAnswerTimeout: () => void
 }
 
 // ── AudioWorklet processor source (inline) ──────────────────────────────────
@@ -83,9 +90,16 @@ export function useRealtimeSocket(): RealtimeControls {
   const workletNodeRef = useRef<AudioWorkletNode | null>(null)
   const onEventRef = useRef<((e: RealtimeEvent) => void) | null>(null)
 
+  // audioMutedRef gates whether audio frames are forwarded to the WebSocket.
+  // The mic stream stays alive (for zero-latency resume) but frames are
+  // dropped when muted. Starts muted — unmuteAudio() is called by the
+  // interview room when the assistant finishes speaking.
+  const audioMutedRef = useRef<boolean>(true)
+
   const [connected, setConnected] = useState(false)
   const [micActive, setMicActive] = useState(false)
   const [assistantSpeaking, setAssistantSpeaking] = useState(false)
+  const [audioMuted, setAudioMuted] = useState(true)
 
   // Clean up on unmount
   useEffect(() => {
@@ -146,10 +160,13 @@ export function useRealtimeSocket(): RealtimeControls {
   function _handleServerEvent(event: RealtimeEvent) {
     switch (event.type) {
       case 'audio':
-        // Queue audio for playback
+        // Queue audio for playback; mute candidate mic while assistant speaks
         if (event.audio && playerRef.current) {
           playerRef.current.play(event.audio)
           setAssistantSpeaking(true)
+          // Mute candidate mic while assistant is speaking
+          audioMutedRef.current = true
+          setAudioMuted(true)
         }
         break
 
@@ -160,8 +177,9 @@ export function useRealtimeSocket(): RealtimeControls {
         break
 
       case 'assistant_transcript':
-        // Full assistant turn done — audio may still be playing
-        // Check after a short delay if playback finished
+        // Full assistant turn done — audio may still be playing briefly.
+        // The interview room will call unmuteAudio() after a short delay
+        // once it detects the assistant has stopped speaking.
         setTimeout(() => {
           if (!playerRef.current?.isPlaying) {
             setAssistantSpeaking(false)
@@ -172,9 +190,35 @@ export function useRealtimeSocket(): RealtimeControls {
       case 'interview_complete':
         setAssistantSpeaking(false)
         setMicActive(false)
+        // Hard-mute on completion
+        audioMutedRef.current = true
+        setAudioMuted(true)
         break
     }
   }
+
+  // ── Audio mute controls ───────────────────────────────────────────────
+
+  const muteAudio = useCallback(() => {
+    audioMutedRef.current = true
+    setAudioMuted(true)
+  }, [])
+
+  const unmuteAudio = useCallback(() => {
+    audioMutedRef.current = false
+    setAudioMuted(false)
+  }, [])
+
+  // ── Send answer timeout signal to backend ─────────────────────────────
+
+  const sendAnswerTimeout = useCallback(() => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({ type: 'answer_timeout' }))
+    }
+    // Mute mic after timeout
+    audioMutedRef.current = true
+    setAudioMuted(true)
+  }, [])
 
   // ── Microphone capture ────────────────────────────────────────────────
 
@@ -208,6 +252,8 @@ export function useRealtimeSocket(): RealtimeControls {
     workletNodeRef.current = workletNode
 
     workletNode.port.onmessage = (e: MessageEvent<Float32Array>) => {
+      // Drop frames when muted — mic stream stays alive for low-latency resume
+      if (audioMutedRef.current) return
       if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return
 
       const float32 = e.data
@@ -237,15 +283,21 @@ export function useRealtimeSocket(): RealtimeControls {
     streamRef.current?.getTracks().forEach(t => t.stop())
     streamRef.current = null
     setMicActive(false)
+    audioMutedRef.current = true
+    setAudioMuted(true)
   }, [])
 
   return {
     connected,
     micActive,
     assistantSpeaking,
+    audioMuted,
     connect,
     disconnect,
     startMic,
     stopMic,
+    muteAudio,
+    unmuteAudio,
+    sendAnswerTimeout,
   }
 }

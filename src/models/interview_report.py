@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime, timezone
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, List, Optional
 
 from sqlalchemy import DateTime, Float, ForeignKey, String, Text
-from sqlalchemy.dialects.postgresql import ARRAY, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.models.base import Base
@@ -41,6 +41,9 @@ class InterviewReport(Base):
     weaknesses: Mapped[list[str]] = mapped_column(ARRAY(String), nullable=False, default=list)
     summary: Mapped[str] = mapped_column(Text, nullable=False)
     export_url: Mapped[Optional[str]] = mapped_column(String(2048), nullable=True)
+    # Per-question breakdown: list of {question, answer, skill, difficulty,
+    # score, feedback, evaluation_reasoning, metrics_used, strengths, weaknesses}
+    qa_details: Mapped[Optional[List[dict]]] = mapped_column(JSONB, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
