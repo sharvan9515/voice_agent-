@@ -1,4 +1,4 @@
-export type AppState = 'setup' | 'starting' | 'interview' | 'finishing' | 'report'
+export type AppState = 'setup' | 'interview' | 'report'
 
 export interface SetupData {
   jobId: string
@@ -9,14 +9,6 @@ export interface SetupData {
     text: string
     topic: string
   }
-}
-
-export interface WsMessage {
-  type: 'question' | 'follow_up' | 'complete' | 'error' | 'pong'
-  text?: string
-  topic?: string
-  question_id?: string
-  message?: string
 }
 
 export interface ConversationEntry {
@@ -42,4 +34,46 @@ export interface ApiResponse<T> {
   data?: T
   message?: string
   error?: { code: string; message: string }
+}
+
+export interface ScreeningResult {
+  fit_score: number
+  verdict: 'qualified' | 'unqualified'
+  matched_skills: string[]
+  missing_skills: string[]
+  experience_match: boolean
+  breakdown: {
+    skills_score: number
+    experience_score: number
+    domain_score: number
+  }
+}
+
+export interface InterviewSetupResponse {
+  status: 'ready' | 'screened_out'
+  session_id?: string
+  realtime_ws_url?: string
+  candidate: {
+    id?: string
+    name: string
+    email: string
+    experience_level?: string
+    skills?: string[]
+    experience_years?: number
+  }
+  screening: ScreeningResult
+  first_question?: {
+    question_id: string
+    text: string
+    topic: string
+  }
+  config: {
+    max_questions: number
+    max_follow_ups_per_topic: number
+    depth: string
+    style: string
+    focus_areas: string[]
+    screen_threshold: number
+    tts_voice: string
+  }
 }

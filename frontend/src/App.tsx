@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import SetupForm from './components/SetupForm'
-import InterviewRoom from './components/InterviewRoom'
+import RealtimeInterviewRoom from './components/RealtimeInterviewRoom'
 import ReportView from './components/ReportView'
 import { AppState, SetupData } from './types'
 
@@ -32,7 +32,7 @@ export default function App() {
       )}
 
       {appState === 'interview' && setupData && (
-        <InterviewRoom
+        <RealtimeInterviewRoom
           setup={setupData}
           onComplete={handleInterviewComplete}
         />

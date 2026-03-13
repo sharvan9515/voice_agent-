@@ -36,3 +36,11 @@ class SessionState(BaseModel):
     started_at: str
     jd_context: Optional[dict] = None
     resume_context: Optional[dict] = None
+    interview_config: Optional[dict] = None
+    topics_covered: list[str] = []
+    follow_ups_this_topic: int = 0
+    current_topic: str = ""
+    interview_config: Optional[dict] = None
+    topics_covered: list[str] = []
+    follow_ups_this_topic: int = 0
+    current_topic: str = ""

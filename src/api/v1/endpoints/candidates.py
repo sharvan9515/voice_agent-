@@ -13,6 +13,32 @@ from src.utils import response as resp
 router = APIRouter(prefix="/candidates", tags=["candidates"])
 
 
+@router.post("/from-resume", status_code=201)
+async def create_candidate_from_resume(
+    db: DbSession,
+    file: UploadFile = File(...),
+) -> JSONResponse:
+    """Create a candidate from a resume file (PDF or TXT). Name and email are auto-extracted."""
+    # Detect PDF by content-type OR filename extension (browsers sometimes send
+    # application/octet-stream instead of application/pdf)
+    ct = (file.content_type or "").lower()
+    filename = (file.filename or "").lower()
+    if "pdf" not in ct and filename.endswith(".pdf"):
+        ct = "application/pdf"
+    if not ct:
+        ct = "text/plain"
+
+    svc = CandidateService(db)
+    candidate = await svc.create_candidate_from_resume(
+        await file.read(),
+        ct,
+    )
+    return resp.created(
+        data=CandidateResponse.model_validate(candidate).model_dump(mode="json"),
+        message="Candidate created from resume",
+    )
+
+
 @router.post("", status_code=201)
 async def create_candidate(body: CandidateCreate, db: DbSession) -> JSONResponse:
     """Create a new candidate."""
