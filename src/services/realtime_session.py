@@ -383,6 +383,12 @@ class RealtimeInterviewSession:
         logger.debug("Realtime session configured | session={} | topics={}",
                       self.session_id, self._allowed_topics)
 
+        # Explicitly trigger the interviewer's opening greeting.
+        # The mic starts muted on the client side (audio-gated answer window),
+        # so server VAD will never fire on its own to kick off the first turn.
+        await openai_ws.send(json.dumps({"type": "response.create"}))
+        logger.debug("Initial response triggered | session={}", self.session_id)
+
     async def _relay_client_to_openai(self, client_ws: WebSocket, openai_ws) -> None:
         """Forward audio and control messages from browser client to OpenAI."""
         try:
